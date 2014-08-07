@@ -1,5 +1,5 @@
 (require '[datomic.api :as d])
-(def uri "datomic:mem://hello")
+(def uri "datomic:free://localhost:4334/hello")
 (d/create-database uri)
 (def conn (d/connect uri))
 
@@ -11,6 +11,13 @@
      (d/tempid :db.part/user)
      :db/doc
      "Hello world"]]))
+
+;; Dhruv Testing
+(def tx-result-dhruv
+  (d/transact
+   conn
+   [{:db/id (d/tempid :db.part/user)
+     :db/doc "Hello World from Dhruv"}]))
 
 ;; transaction result is data
 tx-result
