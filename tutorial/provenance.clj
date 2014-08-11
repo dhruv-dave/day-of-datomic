@@ -5,8 +5,10 @@
 (transact-all conn (io/resource "day-of-datomic/social-news.edn"))
 (transact-all conn (io/resource "day-of-datomic/provenance.edn"))
 
-(defpp stu (qe '[:find ?e :where [?e :user/email "stuarthalloway@datomic.com"]]
-             (d/db conn)))
+(defpp stu (qe '[:find ?e
+                 :where
+                 [?e :user/email "stuarthalloway@datomic.com"]]
+               (d/db conn)))
 
 ;; Stu loves to pimp his own blog posts...
 (defpp tx1-result (d/transact
@@ -38,21 +40,21 @@
  conn
  [{:db/id (d/tempid :db.part/user)
    :story/title "ElastiCache in 5 minutes"
-   :story/url "http://blog.datomic.com/2012/09/elasticache-in-5-minutes.html"}
-  {:db/id (d/tempid :db.part/tx)
-   :source/user (:db/id editor)}])
+   :story/url "http://blog.datomic.com/2012/09/elasticache-in-5-minutes.html"
+   {:db/id (d/tempid :db.part/tx)
+    :source/user (:db/id editor)}}])
 
 ;; what is the title now?
 (d/q '[:find ?v
-     :where [?e :story/title ?v]
-            [?e :story/url "http://blog.datomic.com/2012/09/elasticache-in-5-minutes.html"]]
-   (d/db conn))
+       :where [?e :story/title ?v]
+       [?e :story/url "http://blog.datomic.com/2012/09/elasticache-in-5-minutes.html"]]
+     (d/db conn))
 
 ;; what was the title as of early point in time?
 (d/q '[:find ?v
-     :where [?e :story/title ?v]
-            [?e :story/url "http://blog.datomic.com/2012/09/elasticache-in-5-minutes.html"]]
-   (d/as-of (d/db conn) inst))
+       :where [?e :story/title ?v]
+       [?e :story/url "http://blog.datomic.com/2012/09/elasticache-in-5-minutes.html"]]
+     (d/as-of (d/db conn) inst))
 
 ;; who changed the title, and when?
 (->> (d/q '[:find ?e ?v ?email ?inst ?added

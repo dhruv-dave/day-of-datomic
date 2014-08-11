@@ -1,10 +1,10 @@
-;   Copyright (c) Metadata Partners, LLC. All rights reserved.
-;   The use and distribution terms for this software are covered by the
-;   Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
-;   which can be found in the file epl-v10.html at the root of this distribution.
-;   By using this software in any fashion, you are agreeing to be bound by
-;   the terms of this license.
-;   You must not remove this notice, or any other, from this software.
+                                        ;   Copyright (c) Metadata Partners, LLC. All rights reserved.
+                                        ;   The use and distribution terms for this software are covered by the
+                                        ;   Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
+                                        ;   which can be found in the file epl-v10.html at the root of this distribution.
+                                        ;   By using this software in any fashion, you are agreeing to be bound by
+                                        ;   the terms of this license.
+                                        ;   You must not remove this notice, or any other, from this software.
 
 (ns datomic.samples.query
   (:require [datomic.samples.schema :as schema]
@@ -43,7 +43,7 @@
 
 (defn qes
   "Returns the entities returned by a query, assuming that
-   all :find results are entity ids."
+  all :find results are entity ids."
   [query db & args]
   (->> (apply d/q query db args)
        (mapv (fn [items]
@@ -65,8 +65,8 @@
 
 (defn maybe
   "Returns the value of attr for e, or if-not if e does not possess
-   any values for attr. Cardinality-many attributes will be
-   returned as a set"
+  any values for attr. Cardinality-many attributes will be
+  returned as a set"
   [db e attr if-not]
   (let [result (d/q '[:find ?v
                       :in $ ?e ?a
@@ -74,8 +74,8 @@
                     db e (d/entid db attr))]
     (if (seq result)
       (case (schema/cardinality db attr)
-            :db.cardinality/one (ffirst result)
-            :db.cardinality/many (into #{} (map first result)))
+        :db.cardinality/one (ffirst result)
+        :db.cardinality/many (into #{} (map first result)))
       if-not)))
 
 (defn modes
